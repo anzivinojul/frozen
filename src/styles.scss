@@ -1,1 +1,22 @@
-/* You can add global styles to this file, and also import other style files */
+// BASE
+
+@import './assets/scss/base/reset';
+@import './assets/scss/base/fonts';
+@import './assets/scss/base/breakpoints';
+@import './assets/scss/base/colors';
+@import './assets/scss/base/functions';
+@import './assets/scss/base/messages';
+
+// COMPONENTS
+
+@import './assets/scss/components/container';
+
+//BODY
+body {
+  background-color: #333533;
+  min-height: 100vh;
+  width: 100%;
+  color: #E8EDDF;
+  font-family: $font;
+  font-weight: 600;
+}

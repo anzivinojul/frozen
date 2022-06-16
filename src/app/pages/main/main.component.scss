@@ -1,0 +1,101 @@
+@import '../../../assets/scss/master.scss';
+
+main {
+  display: flex;
+  width: 100%;
+  height: calc(100vh - 96px);
+}
+
+.main {
+
+  .main-left {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    width: 40%;
+    height: inherit;
+    padding: space(12) 0;
+
+    .temperature-out {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: space(3);
+
+      .temperature-out-title {
+        font-size: 1.8em;
+        font-weight: bold;
+      }
+
+      .temperature-out-data {
+        font-size: 2.6em;
+        font-weight: bold;
+        font-family: $font-secondary;
+      }
+    }
+
+    .temperature-climatisation {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: space(3);
+
+      .temperature-climatisation-title {
+        font-size: 1.8em;
+        font-weight: bold;
+      }
+
+      .temperature-climatisation-data {
+        font-size: 2.6em;
+        font-weight: bold;
+        font-family: $font-secondary;
+      }
+    }
+
+    .power-climatisation {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: space(3);
+
+      .power-climatisation-title {
+        font-size: 1.8em;
+        font-weight: bold;
+      }
+
+      .power-climatisation-data {
+        font-size: 2.6em;
+        font-weight: bold;
+        font-family: $font-secondary;
+      }
+    }
+  }
+
+  .main-right {
+    display: flex;
+    justify-content: center;
+    width: 60%;
+    height: inherit;
+    padding: space(12) 0;
+
+    .temperature-history {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-between;
+
+      .temperature-history-title {
+        font-size: 1.8em;
+        font-weight: bold;
+      }
+
+      .temperature-history-data {
+        background-color: $white;
+        padding: space(4);
+        border: 3px solid $black;
+      }
+    }
+  }
+}
+

@@ -1,0 +1,44 @@
+<main class="main">
+
+  <div class="main-left">
+
+    <div class="temperature-out">
+      <h3 class="temperature-out-title">Température actuelle</h3>
+
+      <h3 class="temperature-out-data">22°C</h3>
+    </div>
+
+    <div class="temperature-climatisation">
+      <h3 class="temperature-climatisation-title">Température climatisation</h3>
+
+      <h3 class="temperature-climatisation-data">21°C</h3>
+    </div>
+
+    <div class="power-climatisation">
+      <h3 class="power-climatisation-title">Puissance climatisation</h3>
+
+      <h3 class="power-climatisation-data">3/5</h3>
+    </div>
+
+  </div>
+
+  <div class="main-right">
+
+    <div class="temperature-history">
+
+      <h3 class="temperature-history-title">Historique des températures</h3>
+
+      <div class="temperature-history-data" style="display: block">
+        <canvas baseChart width="700" height="500"
+          [datasets]="temperatureHistoryData"
+          [labels]="temperatureHistoryLabels"
+          [options]="temperatureHistoryOptions"
+          [legend]="temperatureHistoryLegends"
+          [type]="'line'"
+        ></canvas>
+      </div>
+    </div>
+
+  </div>
+
+</main>
