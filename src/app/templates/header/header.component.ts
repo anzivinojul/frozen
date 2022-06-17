@@ -9,7 +9,14 @@ export class HeaderComponent implements OnInit {
 
   constructor() { }
 
+  auto = false;
+
+  autoToggle() {
+    this.auto = !this.auto;
+  }
+
   ngOnInit(): void {
+    this.auto = false;
   }
 
 }

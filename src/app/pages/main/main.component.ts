@@ -31,20 +31,25 @@ export class MainComponent implements OnInit {
 
     for(let i = 0 ; i <= 10 ; i++) {
 
+      console.log(actualHour);
+
+
       if(actualHour == 0) {
         actualHour = 23;
         actualHourString = actualHour.toString();
+        this.temperatureHistoryLabels.push(actualHourString + 'h');
       }
       else if(actualHour < 11) {
         actualHour--;
         actualHourString = actualHour.toString();
+        this.temperatureHistoryLabels.push('0' + actualHourString + 'h');
       }
       else {
         actualHour--;
         actualHourString = actualHour.toString();
+        this.temperatureHistoryLabels.push(actualHourString + 'h');
       }
 
-      this.temperatureHistoryLabels.push(actualHourString + 'h');
     }
 
     this.temperatureHistoryLabels.reverse();

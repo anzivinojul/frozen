@@ -15,8 +15,9 @@
     </div>
 
     <div class="right">
-      <a [routerLink]="['/']" class="logo-nav">
-        <img src="../../../assets/images/snowflake.png" alt="snowflake">
+      <a [routerLink]="['/']" (click)="this.autoToggle()" class="logo-nav">
+        <img *ngIf="!auto" src="../../../assets/images/auto-disabled.png" alt="auto-disabled">
+        <img *ngIf="auto" src="../../../assets/images/auto.png" alt="auto-enable">
       </a>
     </div>
 
