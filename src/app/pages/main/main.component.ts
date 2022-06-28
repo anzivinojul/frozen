@@ -93,7 +93,7 @@ export class MainComponent implements OnInit {
 
   getLight() {
     this.thingworxAPI.getLight().subscribe((light: any) => {
-      if(light.rows[0].LIGHT_LUX > 0) {
+      if(light.rows[0].LIGHT_LUX > 50) {
         this.lightOut = true;
       }
       else {
@@ -105,7 +105,7 @@ export class MainComponent implements OnInit {
   getLightInterval() {
     setInterval(() => {
       this.thingworxAPI.getLight().subscribe((light: any) => {
-        if(light.rows[0].LIGHT_LUX > 0) {
+        if(light.rows[0].LIGHT_LUX > 20) {
           this.lightOut = true;
         }
         else {
