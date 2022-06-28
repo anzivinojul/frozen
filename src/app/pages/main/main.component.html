@@ -5,13 +5,13 @@
     <div class="temperature-out">
       <h3 class="temperature-out-title">Température actuelle</h3>
 
-      <h3 class="temperature-out-data">22°C</h3>
+      <h3 class="temperature-out-data">{{ this.temperatureOut }}°C</h3>
     </div>
 
     <div class="temperature-climatisation">
       <h3 class="temperature-climatisation-title">Température climatisation</h3>
 
-      <h3 class="temperature-climatisation-data">21°C</h3>
+      <h3 class="temperature-climatisation-data">25°C</h3>
     </div>
 
     <div class="power-climatisation">
@@ -29,7 +29,7 @@
       <h3 class="temperature-history-title">Historique des températures</h3>
 
       <div class="temperature-history-data" style="display: block">
-        <canvas baseChart width="700" height="450"
+        <canvas baseChart width="700" height="300"
           [datasets]="temperatureHistoryData"
           [labels]="temperatureHistoryLabels"
           [options]="temperatureHistoryOptions"

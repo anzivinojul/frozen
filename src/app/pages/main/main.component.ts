@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ChartDataset } from 'chart.js';
+import { ThingworxService } from 'src/app/core/api/thingworx.service';
 
 @Component({
   selector: 'app-main',
@@ -7,6 +8,8 @@ import { ChartDataset } from 'chart.js';
   styleUrls: ['./main.component.scss']
 })
 export class MainComponent implements OnInit {
+
+  temperatureOut: any;
 
   temperatureHistoryData: ChartDataset[] = [
 
@@ -22,7 +25,7 @@ export class MainComponent implements OnInit {
 
   temperatureHistoryLegends = false;
 
-  constructor() { }
+  constructor(protected thingworxAPI: ThingworxService) { }
 
   fillHoursHistory() {
     const dateToday = new Date();
@@ -30,9 +33,6 @@ export class MainComponent implements OnInit {
     let actualHourString = '';
 
     for(let i = 0 ; i <= 10 ; i++) {
-
-      console.log(actualHour);
-
 
       if(actualHour == 0) {
         actualHour = 23;
@@ -55,9 +55,19 @@ export class MainComponent implements OnInit {
     this.temperatureHistoryLabels.reverse();
   }
 
+  getTemperature() {
+    setInterval(() => {
+      this.thingworxAPI.getTemperature().subscribe((temperature: any) => {
+        this.temperatureOut = temperature.rows[0].TEMP_TEMP;
+      })
+    }, 2000)
+  }
+
   ngOnInit(): void {
 
+    this.getTemperature();
     this.fillHoursHistory();
+
   }
 
 }
