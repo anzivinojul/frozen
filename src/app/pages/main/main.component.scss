@@ -35,6 +35,24 @@ main {
       }
     }
 
+    .light-out {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: space(3);
+
+      .light-out-title {
+        font-size: 1.8em;
+        font-weight: bold;
+      }
+
+      .light-out-data {
+        font-size: 2.6em;
+        font-weight: bold;
+        font-family: $font-secondary;
+      }
+    }
+
     .temperature-climatisation {
       display: flex;
       flex-direction: column;
@@ -47,24 +65,6 @@ main {
       }
 
       .temperature-climatisation-data {
-        font-size: 2.6em;
-        font-weight: bold;
-        font-family: $font-secondary;
-      }
-    }
-
-    .power-climatisation {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: space(3);
-
-      .power-climatisation-title {
-        font-size: 1.8em;
-        font-weight: bold;
-      }
-
-      .power-climatisation-data {
         font-size: 2.6em;
         font-weight: bold;
         font-family: $font-secondary;

@@ -8,16 +8,19 @@
       <h3 class="temperature-out-data">{{ this.temperatureOut }}°C</h3>
     </div>
 
+    <div class="light-out">
+      <h3 class="light-out-title">Luminosité actuelle</h3>
+
+      <h3 class="light-out-data">
+        <img *ngIf="!this.lightOut" src="../../../assets/images/lightbulb-disabled.png" alt="auto-disabled">
+        <img *ngIf="this.lightOut" src="../../../assets/images/lightbulb-enabled.png" alt="auto-enable">
+      </h3>
+    </div>
+
     <div class="temperature-climatisation">
       <h3 class="temperature-climatisation-title">Température climatisation</h3>
 
       <h3 class="temperature-climatisation-data">25°C</h3>
-    </div>
-
-    <div class="power-climatisation">
-      <h3 class="power-climatisation-title">Puissance climatisation</h3>
-
-      <h3 class="power-climatisation-data">3/5</h3>
     </div>
 
   </div>
