@@ -20,7 +20,45 @@
     <div class="temperature-climatisation">
       <h3 class="temperature-climatisation-title">Température climatisation</h3>
 
-      <h3 class="temperature-climatisation-data">25°C</h3>
+      <div *ngIf="!this.auto" class="temperature-climatisation-auto-disabled">
+        <i class="ri-subtract-line" (click)="this.minusTemperature()"></i>
+        <h3 class="temperature-climatisation-data">{{ this.temperatureClimatisation }}°C</h3>
+        <i class="ri-add-line" (click)="this.plusTemperature()"></i>
+      </div>
+
+      <div *ngIf="this.auto" class="temperature-climatisation-auto-enabled">
+        <h3 class="temperature-climatisation-data">{{ this.temperatureClimatisation }}°C</h3>
+      </div>
+
+
+    </div>
+
+  </div>
+
+  <div class="main-center">
+
+    <div class="electricity-saved">
+
+      <div class="electricity-saved-title">
+        Électricité économisé
+      </div>
+
+      <div class="electricity-saved-data">
+        <span>947KWh/an</span> <i class="ri-funds-fill"></i>
+      </div>
+
+    </div>
+
+    <div class="money-saved">
+
+      <div class="money-saved-title">
+        Argent économisé
+      </div>
+
+      <div class="money-saved-data">
+        <span>92€/an</span> <i class="ri-funds-fill"></i>
+      </div>
+
     </div>
 
   </div>
@@ -32,7 +70,7 @@
       <h3 class="temperature-history-title">Historique des températures</h3>
 
       <div class="temperature-history-data" style="display: block">
-        <canvas baseChart width="700" height="300"
+        <canvas baseChart width="450" height="300"
           [datasets]="temperatureHistoryData"
           [labels]="temperatureHistoryLabels"
           [options]="temperatureHistoryOptions"

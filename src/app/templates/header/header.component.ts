@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs';
+import { SharedataService } from 'src/app/core/sharedata.service';
 
 @Component({
   selector: 'app-header',
@@ -7,16 +9,21 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HeaderComponent implements OnInit {
 
-  constructor() { }
+  constructor(protected shareData: SharedataService) { }
 
-  auto = false;
+  auto: boolean | undefined;
+  subscription: Subscription | undefined;
 
   autoToggle() {
-    this.auto = !this.auto;
+    this.shareData.changeBoolean(!this.auto);
   }
 
   ngOnInit(): void {
-    this.auto = false;
+    this.subscription = this.shareData.currentBoolean.subscribe(boolean => this.auto = boolean);
+  }
+
+  ngOnDestroy(): void {
+    this.subscription?.unsubscribe();
   }
 
 }

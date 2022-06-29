@@ -2,8 +2,11 @@
 
 main {
   display: flex;
+  justify-content: space-between;
+  padding: 0 space(8);
   width: 100%;
   height: calc(100vh - 96px);
+  text-align: center;
 }
 
 .main {
@@ -13,7 +16,6 @@ main {
     flex-direction: column;
     align-items: center;
     justify-content: space-between;
-    width: 40%;
     min-height: inherit;
     padding: space(12) 0;
 
@@ -24,12 +26,12 @@ main {
       gap: space(3);
 
       .temperature-out-title {
-        font-size: 1.8em;
+        font-size: 1.6em;
         font-weight: bold;
       }
 
       .temperature-out-data {
-        font-size: 2.6em;
+        font-size: 2em;
         font-weight: bold;
         font-family: $font-secondary;
       }
@@ -42,12 +44,12 @@ main {
       gap: space(3);
 
       .light-out-title {
-        font-size: 1.8em;
+        font-size: 1.6em;
         font-weight: bold;
       }
 
       .light-out-data {
-        font-size: 2.6em;
+        font-size: 2em;
         font-weight: bold;
         font-family: $font-secondary;
       }
@@ -60,14 +62,95 @@ main {
       gap: space(3);
 
       .temperature-climatisation-title {
-        font-size: 1.8em;
+        font-size: 1.6em;
         font-weight: bold;
       }
 
+      .temperature-climatisation-auto-disabled {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: space(2);
+
+        i {
+          position: relative;
+          top: 3px;
+          font-size: 2em;
+          font-weight: bolder;
+          color: #E8EDDF;
+
+          &:hover {
+            cursor: pointer;
+            color: #75D6FF;
+          }
+        }
+      }
+
       .temperature-climatisation-data {
-        font-size: 2.6em;
+        font-size: 2em;
         font-weight: bold;
         font-family: $font-secondary;
+      }
+    }
+  }
+
+  .main-center {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    min-height: inherit;
+    padding: space(12) 0;
+
+    .electricity-saved {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: space(3);
+
+      .electricity-saved-title {
+        font-size: 1.6em;
+        font-weight: bold;
+      }
+
+      .electricity-saved-data {
+        display: flex;
+        align-items: center;
+        gap: space(2);
+        font-size: 2em;
+        font-weight: bold;
+        font-family: $font-secondary;
+
+        i {
+          font-size: 1.6em;
+          color: #53ff1f;
+        }
+      }
+    }
+
+    .money-saved {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: space(3);
+
+      .money-saved-title {
+        font-size: 1.6em;
+        font-weight: bold;
+      }
+
+      .money-saved-data {
+        display: flex;
+        align-items: center;
+        gap: space(2);
+        font-size: 2em;
+        font-weight: bold;
+        font-family: $font-secondary;
+
+        i {
+          font-size: 1.6em;
+          color: #53ff1f;
+        }
       }
     }
   }
@@ -75,7 +158,6 @@ main {
   .main-right {
     display: flex;
     justify-content: center;
-    width: 60%;
     min-height: inherit;
     padding: space(12) 0;
 
@@ -86,14 +168,15 @@ main {
       gap: space(3);
 
       .temperature-history-title {
-        font-size: 1.8em;
+        font-size: 1.6em;
         font-weight: bold;
       }
 
       .temperature-history-data {
         background-color: $white;
         padding: space(4);
-        border: 3px solid $black;
+        border: 3px solid #E8EDDF;
+        border-radius: 4px;
       }
     }
   }

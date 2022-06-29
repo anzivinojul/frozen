@@ -15,6 +15,8 @@
     </div>
 
     <div class="right">
+      <h3 class="right-auto-disabled" *ngIf="!auto">MANUEL</h3>
+      <h3 class="right-auto-enabled" *ngIf="auto">AUTOMATIQUE</h3>
       <a [routerLink]="['/']" (click)="this.autoToggle()" class="logo-nav">
         <img *ngIf="!auto" src="../../../assets/images/auto-disabled.png" alt="auto-disabled">
         <img *ngIf="auto" src="../../../assets/images/auto.png" alt="auto-enable">

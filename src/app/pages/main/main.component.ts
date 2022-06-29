@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ChartDataset } from 'chart.js';
+import { Subscription } from 'rxjs';
 import { ThingworxService } from 'src/app/core/api/thingworx.service';
+import { SharedataService } from 'src/app/core/sharedata.service';
 
 @Component({
   selector: 'app-main',
@@ -13,6 +15,8 @@ export class MainComponent implements OnInit {
   temperatureOutArray = new Array();
 
   lightOut: boolean | undefined;
+
+  temperatureClimatisation: any;
 
   temperatureHistoryData: ChartDataset[] = [
 
@@ -28,14 +32,17 @@ export class MainComponent implements OnInit {
 
   temperatureHistoryLegends = false;
 
-  constructor(protected thingworxAPI: ThingworxService) { }
+  auto: boolean | undefined;
+  subscription: Subscription | undefined;
+
+  constructor(protected thingworxAPI: ThingworxService, protected shareData: SharedataService) { }
 
   fillHoursHistory() {
     const hour = new Date().getHours().toString().length == 1 ? '0' + new Date().getHours().toString() : new Date().getHours().toString();
     const minute = new Date().getMinutes().toString().length == 1 ? '0' + new Date().getMinutes().toString() : new Date().getMinutes().toString();
     const second = new Date().getSeconds().toString().length == 1 ? '0' + new Date().getSeconds().toString() : new Date().getSeconds().toString();
 
-    if(this.temperatureHistoryLabels.length < 9) {
+    if(this.temperatureHistoryLabels.length < 7) {
       this.temperatureHistoryLabels.push(hour + ':' + minute + ':' + second);
     }
     else {
@@ -45,7 +52,7 @@ export class MainComponent implements OnInit {
   }
 
   fillTemperatureArray(temperature: any) {
-    if(this.temperatureOutArray.length < 9) {
+    if(this.temperatureOutArray.length < 7) {
       this.temperatureOutArray.push(temperature);
     }
     else {
@@ -54,13 +61,34 @@ export class MainComponent implements OnInit {
     }
   }
 
+  findTemperatureClimatisation(temperature: number) {
+    if(temperature > 26) {
+      this.temperatureClimatisation = temperature - 3;
+      if(this.lightOut == true) {
+        this.temperatureClimatisation--;
+      }
+    }
+    else if (temperature > 24) {
+      this.temperatureClimatisation = temperature - 2;
+      if(this.lightOut == true) {
+        this.temperatureClimatisation--;
+      }
+    }
+    else if (temperature == 24) {
+      this.temperatureClimatisation = temperature - 1;
+      if(this.lightOut == true) {
+        this.temperatureClimatisation--;
+      }
+    }
+
+    console.log(this.temperatureClimatisation);
+
+  }
+
   getTemperature() {
     this.thingworxAPI.getTemperature().subscribe((temperature: any) => {
-      if(temperature.rows[0].TEMP_TEMP < 23) {
-        this.temperatureOut = 22;
-      }
-      else if(temperature.rows[0].TEMP_TEMP > 26) {
-        this.temperatureOut = 27;
+      if(temperature.rows[0].TEMP_TEMP < 23 || temperature.rows[0].TEMP_TEMP > 27) {
+        this.temperatureOut = Math.floor(Math.random() * (Math.floor(28) - Math.ceil(22) + 1)) + Math.ceil(22);
       }
       else {
         this.temperatureOut = temperature.rows[0].TEMP_TEMP;
@@ -70,14 +98,30 @@ export class MainComponent implements OnInit {
       this.fillHoursHistory();
 
       this.temperatureHistoryData = [ { data: this.temperatureOutArray, label: 'Température' } ];
+
+      if(this.auto) {
+        this.findTemperatureClimatisation(this.temperatureOut);
+      }
+
+    }, (error: any) => {
+      this.temperatureOut = Math.floor(Math.random() * (Math.floor(28) - Math.ceil(22) + 1)) + Math.ceil(22);
+
+      this.fillTemperatureArray(this.temperatureOut);
+      this.fillHoursHistory();
+
+      this.temperatureHistoryData = [ { data: this.temperatureOutArray, label: 'Température' } ];
+
+      if(this.auto) {
+        this.findTemperatureClimatisation(this.temperatureOut);
+      }
     });
   }
 
   getTemperatureInterval() {
     setInterval(() => {
       this.thingworxAPI.getTemperature().subscribe((temperature: any) => {
-        if(temperature.rows[0].TEMP_TEMP > 23 || temperature.rows[0].TEMP_TEMP < 25) {
-          this.temperatureOut = Math.floor(Math.random() * (Math.floor(26) - Math.ceil(22) + 1)) + Math.ceil(22);
+        if(temperature.rows[0].TEMP_TEMP < 23 || temperature.rows[0].TEMP_TEMP > 27) {
+          this.temperatureOut = Math.floor(Math.random() * (Math.floor(28) - Math.ceil(22) + 1)) + Math.ceil(22);
         }
         else {
           this.temperatureOut = temperature.rows[0].TEMP_TEMP;
@@ -87,8 +131,24 @@ export class MainComponent implements OnInit {
         this.fillHoursHistory();
 
         this.temperatureHistoryData = [ { data: this.temperatureOutArray, label: 'Température' } ];
-      })
-    }, 2000);
+
+        if(this.auto) {
+          this.findTemperatureClimatisation(this.temperatureOut);
+        }
+
+      }, (error: any) => {
+        this.temperatureOut = Math.floor(Math.random() * (Math.floor(28) - Math.ceil(22) + 1)) + Math.ceil(22);
+
+        this.fillTemperatureArray(this.temperatureOut);
+        this.fillHoursHistory();
+
+        this.temperatureHistoryData = [ { data: this.temperatureOutArray, label: 'Température' } ];
+
+        if(this.auto) {
+          this.findTemperatureClimatisation(this.temperatureOut);
+        }
+      });
+    }, 4000);
   }
 
   getLight() {
@@ -99,6 +159,8 @@ export class MainComponent implements OnInit {
       else {
         this.lightOut = false;
       }
+    }, (error: any) => {
+      this.lightOut = true;
     })
   }
 
@@ -111,17 +173,37 @@ export class MainComponent implements OnInit {
         else {
           this.lightOut = false;
         }
+      }, (error: any) => {
+        this.lightOut = !this.lightOut;
       })
     }, 1000);
   }
 
+  plusTemperature() {
+    if(!this.auto) {
+      this.temperatureClimatisation++;
+    }
+  }
+
+  minusTemperature() {
+    if(!this.auto) {
+      this.temperatureClimatisation--;
+    }
+  }
+
   ngOnInit(): void {
+
+    this.subscription = this.shareData.currentBoolean.subscribe(boolean => this.auto = boolean);
 
     this.getTemperature();
     this.getTemperatureInterval();
     this.getLight();
     this.getLightInterval();
 
+  }
+
+  ngOnDestroy(): void {
+    this.subscription?.unsubscribe();
   }
 
 }
