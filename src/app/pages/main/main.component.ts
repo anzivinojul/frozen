@@ -173,11 +173,15 @@ export class MainComponent implements OnInit {
       this.thingworxAPI.getLight().subscribe((light: any) => {
         if(light.rows[0].LIGHT_LUX > 60) {
           this.lightOut = true;
-          if(lastLight != this.lightOut && this.temperatureOut != 0) this.findTemperatureClimatisation(this.temperatureOut);
+          if(this.auto) {
+            this.findTemperatureClimatisation(this.temperatureOut);
+          }
         }
         else {
           this.lightOut = false;
-          if(lastLight != this.lightOut && this.temperatureOut!= 0) this.findTemperatureClimatisation(this.temperatureOut);
+          if(this.auto) {
+            this.findTemperatureClimatisation(this.temperatureOut);
+          }
         }
       }, (error: any) => {
         this.lightOut = !this.lightOut;
