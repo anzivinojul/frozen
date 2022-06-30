@@ -5,7 +5,7 @@
     <div class="temperature-out">
       <h3 class="temperature-out-title">Température actuelle</h3>
 
-      <h3 class="temperature-out-data">{{ this.temperatureOut }}°C</h3>
+      <h3 class="temperature-out-data">{{ this.temperatureOut ? this.temperatureOut.toFixed(2) : '...' }}°C</h3>
     </div>
 
     <div class="light-out">
@@ -22,12 +22,12 @@
 
       <div *ngIf="!this.auto" class="temperature-climatisation-auto-disabled">
         <i class="ri-subtract-line" (click)="this.minusTemperature()"></i>
-        <h3 class="temperature-climatisation-data">{{ this.temperatureClimatisation }}°C</h3>
+        <h3 class="temperature-climatisation-data">{{ this.temperatureClimatisation ? this.temperatureClimatisation.toFixed(0) : '...' }}°C</h3>
         <i class="ri-add-line" (click)="this.plusTemperature()"></i>
       </div>
 
       <div *ngIf="this.auto" class="temperature-climatisation-auto-enabled">
-        <h3 class="temperature-climatisation-data">{{ this.temperatureClimatisation }}°C</h3>
+        <h3 class="temperature-climatisation-data">{{ this.temperatureClimatisation ? this.temperatureClimatisation.toFixed(0) : '...' }}°C</h3>
       </div>
 
 

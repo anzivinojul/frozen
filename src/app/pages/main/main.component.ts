@@ -74,21 +74,24 @@ export class MainComponent implements OnInit {
         this.temperatureClimatisation--;
       }
     }
-    else if (temperature == 24) {
+    else if (temperature > 23) {
       this.temperatureClimatisation = temperature - 1;
       if(this.lightOut == true) {
         this.temperatureClimatisation--;
       }
     }
-
-    console.log(this.temperatureClimatisation);
-
+    else {
+      this.temperatureClimatisation = 22;
+      if(this.lightOut == true) {
+        this.temperatureClimatisation--;
+      }
+    }
   }
 
   getTemperature() {
     this.thingworxAPI.getTemperature().subscribe((temperature: any) => {
-      if(temperature.rows[0].TEMP_TEMP < 23 || temperature.rows[0].TEMP_TEMP > 27) {
-        this.temperatureOut = Math.floor(Math.random() * (Math.floor(28) - Math.ceil(22) + 1)) + Math.ceil(22);
+      if(temperature.rows[0].TEMP_TEMP < 23 || temperature.rows[0].TEMP_TEMP > 25) {
+        this.temperatureOut = (Math.random() * (25 - 23 + 1)) + 23;
       }
       else {
         this.temperatureOut = temperature.rows[0].TEMP_TEMP;
@@ -104,7 +107,7 @@ export class MainComponent implements OnInit {
       }
 
     }, (error: any) => {
-      this.temperatureOut = Math.floor(Math.random() * (Math.floor(28) - Math.ceil(22) + 1)) + Math.ceil(22);
+      this.temperatureOut = (Math.random() * (25 - 23 + 1)) + 23;
 
       this.fillTemperatureArray(this.temperatureOut);
       this.fillHoursHistory();
@@ -120,8 +123,8 @@ export class MainComponent implements OnInit {
   getTemperatureInterval() {
     setInterval(() => {
       this.thingworxAPI.getTemperature().subscribe((temperature: any) => {
-        if(temperature.rows[0].TEMP_TEMP < 23 || temperature.rows[0].TEMP_TEMP > 27) {
-          this.temperatureOut = Math.floor(Math.random() * (Math.floor(28) - Math.ceil(22) + 1)) + Math.ceil(22);
+        if(temperature.rows[0].TEMP_TEMP < 23 || temperature.rows[0].TEMP_TEMP > 25) {
+          this.temperatureOut = (Math.random() * (25 - 23 + 1)) + 23;
         }
         else {
           this.temperatureOut = temperature.rows[0].TEMP_TEMP;
@@ -137,7 +140,7 @@ export class MainComponent implements OnInit {
         }
 
       }, (error: any) => {
-        this.temperatureOut = Math.floor(Math.random() * (Math.floor(28) - Math.ceil(22) + 1)) + Math.ceil(22);
+        this.temperatureOut = (Math.random() * (25 - 23 + 1)) + 23;
 
         this.fillTemperatureArray(this.temperatureOut);
         this.fillHoursHistory();
@@ -153,7 +156,7 @@ export class MainComponent implements OnInit {
 
   getLight() {
     this.thingworxAPI.getLight().subscribe((light: any) => {
-      if(light.rows[0].LIGHT_LUX > 50) {
+      if(light.rows[0].LIGHT_LUX > 60) {
         this.lightOut = true;
       }
       else {
@@ -165,18 +168,21 @@ export class MainComponent implements OnInit {
   }
 
   getLightInterval() {
+    const lastLight = this.lightOut;
     setInterval(() => {
       this.thingworxAPI.getLight().subscribe((light: any) => {
-        if(light.rows[0].LIGHT_LUX > 20) {
+        if(light.rows[0].LIGHT_LUX > 60) {
           this.lightOut = true;
+          if(lastLight != this.lightOut && this.temperatureOut != 0) this.findTemperatureClimatisation(this.temperatureOut);
         }
         else {
           this.lightOut = false;
+          if(lastLight != this.lightOut && this.temperatureOut!= 0) this.findTemperatureClimatisation(this.temperatureOut);
         }
       }, (error: any) => {
         this.lightOut = !this.lightOut;
       })
-    }, 1000);
+    }, 500);
   }
 
   plusTemperature() {
