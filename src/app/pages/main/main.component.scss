@@ -2,8 +2,6 @@
 
 main {
   display: flex;
-  //justify-content: space-between;
-  //padding: 0 space(8);
   width: 100%;
   height: calc(100vh - 96px);
   text-align: center;
@@ -163,7 +161,7 @@ main {
     align-items: center;
     min-height: inherit;
     padding-bottom: space(6);
-    flex: 1;
+    flex: 1.5;
 
     .temperature-history {
       display: flex;
